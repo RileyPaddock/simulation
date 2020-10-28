@@ -2,7 +2,7 @@ import math
 import matplotlib.pyplot as plt
 from euler_estimator import EulerEstimator
 class BiologicalNeuron:
-    def __init__(self, stimulus):
+    def __init__(self, stimulus = lambda t: 0):
         self.s_t = stimulus
         self.h_0 = 0.07 * (math.e**3 + 1)/((0.07 * (math.e**3 + 1))+1)
         self.n_0 = 1/(1.25*(math.e-1)+1)
