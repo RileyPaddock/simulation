@@ -35,6 +35,7 @@ class BiologicalNeuron:
 
     def dh_dt(self, t, x):
         return self.ah(t, x)*(1 - x[3]) - self.Bh(t, x)*x[3]
+
     def INa(self, t, x):
         return self.gna(t, x)*(x[0]-115)
 
@@ -53,11 +54,11 @@ class BiologicalNeuron:
     def gl(self, t, x):
         return 0.3
 
-    def dV(self, t, x):
-        return (self.s_t(t) - self.INa(t, x) - self.Ik(t, x) - self.IL(t, x))
+    def dV(self):
+        return lambda t,x : (self.s_t(t) - self.INa(t, x) - self.Ik(t, x) - self.IL(t, x))
 
     def plot_activity(self):
-        estimator = EulerEstimator(derivatives = [self.dV, self.dn_dt, self.dm_dt, self.dh_dt],
+        estimator = EulerEstimator(derivatives = [self.dV(), self.dn_dt, self.dm_dt, self.dh_dt],
                 point = (0, (0, self.n_0, self.m_0, self.h_0)))
         plt.plot([n/2 for n in range(160)], [self.s_t(n/2) for n in range(160)])
 
